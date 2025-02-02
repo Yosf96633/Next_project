@@ -157,6 +157,7 @@ const page = () => {
                 </FormItem>
               )}
             />
+            <div className=" flex justify-center">
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
@@ -167,6 +168,7 @@ const page = () => {
                 `Signup`
               )}
             </Button>
+            </div>
           </form>
         </Form>
         <div>

@@ -5,8 +5,7 @@ export async function POST(request: Request) {
   await dbConnet();
   try {
     const { username, code } = await request.json();
-    const decodedUsername = decodeURIComponent(username);
-    const user = await UserModel.findOne({ username: decodedUsername });
+    const user = await UserModel.findOne({ username: username });
     if (!user) {
       return Response.json(
         {
@@ -20,11 +19,10 @@ export async function POST(request: Request) {
     }
     const isCodeValid = user.verifyCode === code;
     const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
-
     if (isCodeNotExpired && isCodeValid) {
       user.isVerified = true;
       await user.save();
-      Response.json(
+        return Response.json(
         {
           success: true,
           message: `Account Verified`,
@@ -43,7 +41,7 @@ export async function POST(request: Request) {
           status: 400,
         }
       );
-    } else {
+    } 
       return Response.json(
         {
           success: false,
@@ -53,7 +51,7 @@ export async function POST(request: Request) {
           status: 400,
         }
       );
-    }
+    
   } catch (error) {
     console.error(`Error checking username`, error);
     return Response.json(
