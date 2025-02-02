@@ -9,13 +9,13 @@ const UsernameObjectSchema = z.object({
 
 export async function GET(request: Request) {
   await dbConnet();
-
   try {
     const { searchParams } = new URL(request.url);
     const queryParam = {
       username: searchParams.get("username"),
     };
     const result = UsernameObjectSchema.safeParse(queryParam);
+    console.log(result)
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors || [];
       return Response.json(
